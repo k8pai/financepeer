@@ -1,12 +1,8 @@
 'use server';
 
-import { auth } from '@/lib/auth/config';
-import { onFileRead, onParseError } from '@/lib/file';
-import { checkMissingFields } from '@/lib/file/findMissingField';
 import prisma from '@/lib/prisma';
 import { File, JsonRecord } from '@prisma/client';
 import { revalidatePath } from 'next/cache';
-import { v4 as uuidv4 } from 'uuid';
 
 // handle file selection
 export const handleFileSelect = async (
