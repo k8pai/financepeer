@@ -2,50 +2,58 @@
 
 ## Table of Contents
 
--   [Installation](#installation)
 -   [Live Link](#live-link)
+-   [Getting started](#getting-started)
+-   [Usage](#usage)
+-   [Styling](#styling)
+-   [Deployment](#deployment)
 -   [Database](#database)
 -   [Features](#features)
 
-## Installation
+### Tech stack
 
-Clone the project with the command
+-   Next.js
+-   TailwindCSS
+-   MongoDB
+-   Prisma adapter
+-   NextAuth
+-   Node.js
 
-```bash
-git clone https://github.com/k8pai/financepeer.git
+### Live-link
+
+Live Link: [https://jsonify-k8pai.vercel.app](https://jsonify-k8pai.vercel.app)
+
+### Getting started
+
+1. Clone the repository to your local machine.
+2. Install the dependencies: `npm install`
+3. Create a `.env` file in the root directory of the project and add the following environment variables:
+
+```
+MONGODB_URI=YOUR_MONGODB_URI
+NEXTAUTH_URL=http://localhost:3000
+NEXTAUTH_SECRET=YOUR_NEXTAUTH_SECRET
+
+GOOGLE_ID='xxxxxxxxxxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxxx.apps.googleusercontent.com'
+GOOGLE_SECRET='GOCSPX-xxxxxxxxxxxxxxxxxxxxxxxx'
 ```
 
-Install the dependencies
+4. Start the development server: `npm run dev`
 
-```bash
-npm install
-# or
-yarn add
-# or
-pnpm add
-# or
-bun add
-```
+### Usage
 
-To run the development server:
+1. To upload a JSON file, go to `http://localhost:3000/` and select the JSON file to upload.
+2. To view the data saved in the database, go to `http://localhost:3000/saved`.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+### Styling and themes
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+This application uses TailwindCSS for styling and themes. You can customize the styling and themes by editing the `tailwind.config.js` file.
 
-## Live-link
+### Deployment
 
-Live Link: [https://jsonify.vercel.app](https://jsonify.vercel.app)
+To deploy this application, you can use any Next.js hosting provider.
 
-## Database
+### Database
 
 Include a brief description of your project's sitemap here. You can use a bullet-point list or any other format that suits your project's structure.
 
@@ -125,20 +133,3 @@ Jsonify is a versatile tool for handling JSON data efficiently. It comes with a 
     - Automatically formats JSON data for improved readability, making it easier to work with large datasets.
 
 ... (Add more features as needed)
-
-## Use Cases
-
-Include a brief description of the primary use cases for your project. You can use a bullet-point list or any other format that highlights the key scenarios where users can benefit from using Jsonify.
-
-Example:
-
--   Data Parsing
-
-    -   Simplifies the process of parsing and extracting specific information from JSON objects.
-
--   API Integration
-
-    -   Integrate external APIs seamlessly by converting JSON responses into a format that suits your application.
-
--   Data Cleaning and Transformation
-    -   Use Jsonify to clean and transform messy JSON data into a structured format that meets your requirements.
