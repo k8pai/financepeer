@@ -1,12 +1,49 @@
 # Jsonify Project
 
-Live Link: [https://jsonify.vercel.app](https://jsonify.vercel.app)
-
 ## Table of Contents
 
+-   [Installation](#installation)
 -   [Live Link](#live-link)
 -   [Sitemap](#sitemap)
 -   [Features](#features)
+
+## Installation
+
+Clone the project with the command
+
+```bash
+git clone https://github.com/k8pai/financepeer.git
+```
+
+Install the dependencies
+
+```bash
+npm install
+# or
+yarn add
+# or
+pnpm add
+# or
+bun add
+```
+
+To run the development server:
+
+```bash
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+## Live-link
+
+Live Link: [https://jsonify.vercel.app](https://jsonify.vercel.app)
 
 ## Sitemap
 
