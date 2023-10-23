@@ -25,6 +25,7 @@ import {
 	MdPerson,
 	MdSettings,
 } from 'react-icons/md';
+import { SiGoogle } from 'react-icons/si';
 
 const Header = () => {
 	const { data: isLoggedIn, status: isLoading, update } = useSession();
@@ -35,7 +36,7 @@ const Header = () => {
 			<Link href="/" className="text-white text-2xl font-bold">
 				JSONify
 			</Link>
-			<ul className="menu lg:menu-horizontal rounded-box">
+			{/* <ul className="menu lg:menu-horizontal rounded-box">
 				<li
 					className={`${
 						path === '/saved'
@@ -64,7 +65,7 @@ const Header = () => {
 						</span>
 					</Link>
 				</li>
-			</ul>
+			</ul> */}
 			{isLoading === 'loading' ? (
 				<span className="loading loading-spinner loading-lg"></span>
 			) : isLoggedIn ? (
@@ -131,8 +132,11 @@ const Header = () => {
 					color="default"
 					variant="light"
 					onClick={() => signIn('google')}
+					endContent={
+						<SiGoogle className={`fill-[#EA4335] text-lg`} />
+					}
 				>
-					Login With Google
+					Login With
 				</Button>
 			)}
 		</header>

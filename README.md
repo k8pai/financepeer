@@ -4,7 +4,7 @@
 
 -   [Installation](#installation)
 -   [Live Link](#live-link)
--   [Sitemap](#sitemap)
+-   [Database](#database)
 -   [Features](#features)
 
 ## Installation
@@ -45,15 +45,69 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 Live Link: [https://jsonify.vercel.app](https://jsonify.vercel.app)
 
-## Sitemap
+## Database
 
 Include a brief description of your project's sitemap here. You can use a bullet-point list or any other format that suits your project's structure.
 
-Example:
+```
+Database: <database name>
 
--   Home
--   Saved
--   Features
+Collections:
+- File
+- JsonRecord
+
+Documents:
+
+File:
+  _id: <ObjectId>
+  fileName: <String>
+  email: <String>
+  jsonRecords: [
+    {
+      _id: <ObjectId>
+      id: <String>
+      userId: <String>
+      title: <String>
+      body: <String>
+      fileId: <ObjectId>
+    },
+    ...
+  ]
+
+JsonRecord:
+  _id: <ObjectId>
+  id: <String>
+  userId: <String>
+  title: <String>
+  body: <String>
+  fileId: <ObjectId>
+
+Relationships:
+
+File -> JsonRecord (1-to-many)
+```
+
+### Collections
+
+**File**
+
+-   The `File` collection contains documents that represent files.
+-   The document also has a `fileName` field, which is the name of the file, and an `email` field, which is the email address of the user who uploaded the file.
+
+**JsonRecord**
+
+-   The `JsonRecord` collection contains documents that represent the JSON records in a file.
+-   The document has the following fields that comes from each `.json` file.
+    -   `id`
+    -   `userId`
+    -   `title`
+    -   `body`
+-   There's an additional field, `fileId`, which is the identifier of the file that contains the record.
+
+**Relationship**
+
+-   The `File` and `JsonRecord` collections are related through a 1-to-many relationship.
+-   The relationship is implemented through the `fileId` field in the `JsonRecord` document, which references the `id` field in the `File` document.
 
 ## Features
 

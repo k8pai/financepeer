@@ -2,15 +2,17 @@
 
 import { Session } from 'next-auth';
 import React, { ChangeEvent, useRef, useState } from 'react';
-import { SubmitButton } from './SubmitButton';
 import { handleFileSelect } from '@/app/_actions';
 import { JsonRecord } from '@prisma/client';
 import { checkMissingFields } from '@/lib/file/findMissingField';
+import { Button } from '@nextui-org/react';
 
 const FileInput = ({ session }: { session: Session | null }) => {
 	const [selectedFile, setSelectedFile] = useState<boolean>(false);
 	const [isUpdating, setIsUpdating] = useState<boolean>(false);
 	const formRef = useRef<HTMLFormElement>(null);
+
+	const modalRef = useRef<HTMLDialogElement>(null);
 	const [jsonData, setJsonData] = useState<JsonRecord[]>([]);
 	const [parseError, setParseError] = useState<string>('');
 	const [modalError, setModalError] = useState<{
@@ -19,7 +21,7 @@ const FileInput = ({ session }: { session: Session | null }) => {
 		fields: string[];
 	}>({ errorType: null, message: '', fields: [] });
 
-	const handleSubmit = async (formdata) => {
+	const handleSubmit = async (formdata: FormData) => {
 		setIsUpdating(true);
 		const file = formdata.get('file');
 		const { name } = file as File;
@@ -30,7 +32,13 @@ const FileInput = ({ session }: { session: Session | null }) => {
 				message: 'select a file and then try again...',
 				fields: [],
 			});
-			document.getElementById('my_modal_2')!.showModal();
+
+			const modal = modalRef.current;
+			if (modal) {
+				modal.showModal(); // Use showModal() method for <dialog> element
+			}
+
+			// document.getElementById('my_modal_2')!.showModal();
 			setIsUpdating(false);
 
 			return;
@@ -57,8 +65,11 @@ const FileInput = ({ session }: { session: Session | null }) => {
 						message: 'parse Error occured with missing fields',
 						fields: missingFields,
 					});
-
-					document.getElementById('my_modal_2')!.showModal();
+					const modal = modalRef.current;
+					if (modal) {
+						modal.showModal(); // Use showModal() method for <dialog> element
+					}
+					// document.getElementById('my_modal_2')!.showModal();
 					setIsUpdating(false);
 					formRef.current!.reset();
 					return;
@@ -72,8 +83,11 @@ const FileInput = ({ session }: { session: Session | null }) => {
 				fields: ['id', 'userId', 'title', 'body'],
 			});
 			setIsUpdating(false);
-
-			document.getElementById('my_modal_2')!.showModal();
+			const modal = modalRef.current;
+			if (modal) {
+				modal.showModal(); // Use showModal() method for <dialog> element
+			}
+			// document.getElementById('my_modal_2')!.showModal();
 			formRef.current!.reset();
 			return;
 		}
@@ -123,13 +137,15 @@ const FileInput = ({ session }: { session: Session | null }) => {
 					placeholder="Choose a JSON file"
 					className="file-input file-input-ghost w-full max-w-xs"
 				/>
-				<SubmitButton
+				<Button
+					type={'submit'}
 					className="ml-4 rounded-md"
 					aria-disabled={isUpdating}
-					title={isUpdating ? 'loading...' : 'Submit'}
-				/>
+				>
+					{isUpdating ? 'loading...' : 'Submit'}
+				</Button>
 			</form>
-			<dialog id="my_modal_2" className="modal">
+			<dialog ref={modalRef} id="my_modal_2" className="modal">
 				<div className="modal-box">
 					<h3 className="font-bold text-lg">
 						{modalError.errorType}
