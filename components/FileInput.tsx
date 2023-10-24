@@ -8,7 +8,6 @@ import { checkMissingFields } from '@/lib/file/findMissingField';
 import { Button } from '@nextui-org/react';
 
 const FileInput = ({ session }: { session: Session | null }) => {
-	const [selectedFile, setSelectedFile] = useState<boolean>(false);
 	const [isUpdating, setIsUpdating] = useState<boolean>(false);
 	const formRef = useRef<HTMLFormElement>(null);
 
@@ -16,7 +15,7 @@ const FileInput = ({ session }: { session: Session | null }) => {
 	const [jsonData, setJsonData] = useState<JsonRecord[]>([]);
 	const [parseError, setParseError] = useState<string>('');
 	const [modalError, setModalError] = useState<{
-		errorType: 'Parse Error' | 'Select A File' | null;
+		errorType: 'Parse Error' | 'File Error' | 'Login Error' | null;
 		message: string;
 		fields: string[];
 	}>({ errorType: null, message: '', fields: [] });
@@ -28,23 +27,24 @@ const FileInput = ({ session }: { session: Session | null }) => {
 
 		if (!name) {
 			setModalError({
-				errorType: 'Select A File',
+				errorType: 'File Error',
 				message: 'select a file and then try again...',
 				fields: [],
 			});
-
-			const modal = modalRef.current;
-			if (modal) {
-				modal.showModal(); // Use showModal() method for <dialog> element
-			}
-
-			// document.getElementById('my_modal_2')!.showModal();
+			modalRef.current!.showModal();
 			setIsUpdating(false);
 
 			return;
 		}
 
 		if (!session || !session.user) {
+			setModalError({
+				errorType: 'Login Error',
+				message:
+					'You should login first, and then try again to parse a file.',
+				fields: [],
+			});
+			modalRef.current!.showModal();
 			setIsUpdating(false);
 			return;
 		}
@@ -65,11 +65,7 @@ const FileInput = ({ session }: { session: Session | null }) => {
 						message: 'parse Error occured with missing fields',
 						fields: missingFields,
 					});
-					const modal = modalRef.current;
-					if (modal) {
-						modal.showModal(); // Use showModal() method for <dialog> element
-					}
-					// document.getElementById('my_modal_2')!.showModal();
+					modalRef.current!.showModal();
 					setIsUpdating(false);
 					formRef.current!.reset();
 					return;
@@ -83,11 +79,7 @@ const FileInput = ({ session }: { session: Session | null }) => {
 				fields: ['id', 'userId', 'title', 'body'],
 			});
 			setIsUpdating(false);
-			const modal = modalRef.current;
-			if (modal) {
-				modal.showModal(); // Use showModal() method for <dialog> element
-			}
-			// document.getElementById('my_modal_2')!.showModal();
+			modalRef.current!.showModal();
 			formRef.current!.reset();
 			return;
 		}
@@ -98,10 +90,6 @@ const FileInput = ({ session }: { session: Session | null }) => {
 
 	const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
 		const file = event.target.files?.[0];
-		if (file && file.name) {
-			setSelectedFile(true);
-		}
-		// save the name as one of the saved files.
 
 		if (file) {
 			const reader = new FileReader();
@@ -112,7 +100,14 @@ const FileInput = ({ session }: { session: Session | null }) => {
 						const content = JSON.parse(result as string);
 						setJsonData(content);
 					} else {
-						throw new Error('File content is empty');
+						setModalError({
+							errorType: 'Parse Error',
+							message:
+								'The file you inserted is empty or not valid. Try Again!',
+							fields: [],
+						});
+						modalRef.current!.showModal();
+						formRef.current!.reset();
 					}
 				} catch (error) {
 					setParseError(error as string);
