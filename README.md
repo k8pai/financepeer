@@ -5,6 +5,7 @@
 -   [Live Link](#live-link)
 -   [Getting started](#getting-started)
 -   [Usage](#usage)
+-   [Files](#files)
 -   [Styling](#styling)
 -   [Deployment](#deployment)
 -   [Database](#database)
@@ -44,6 +45,10 @@ GOOGLE_SECRET='GOCSPX-xxxxxxxxxxxxxxxxxxxxxxxx'
 
 1. To upload a JSON file, go to `http://localhost:3000/` and select the JSON file to upload.
 2. To view the data saved in the database, go to `http://localhost:3000/saved`.
+
+### Files
+
+There is a `data` folder that contains all the files that are of json type, some matching the validations and some other files to mockup possible errors. You can Upload new files as you wish or can go with the test files ranging from `test1.json` to `test6.json`.
 
 ### Styling and themes
 

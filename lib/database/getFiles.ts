@@ -1,7 +1,7 @@
 import prisma from '../prisma';
 
 export const getFiles = async (email: string) => {
-	console.log('getFiles email param => ', email);
+	// console.log('getFiles email param => ', email);
 
 	if (!email) {
 		return {
