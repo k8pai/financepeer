@@ -57,9 +57,10 @@ const page = async ({ params }: { params: { slug: string; id: string } }) => {
 					</div>
 				)}
 
+				<div className="divider"></div>
 				<JsonData
 					jsonData={jsonData}
-					href={`/saved/${params.slug}/${params.id}/json`}
+					href={`/api/saved/${params.slug}/${params.id}`}
 				/>
 			</div>
 		</div>

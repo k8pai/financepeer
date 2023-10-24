@@ -1,7 +1,7 @@
 'use client';
 
-import React, { ReactNode, useState } from 'react';
-import { Accordion, AccordionItem, Button, Snippet } from '@nextui-org/react';
+import React, { useState } from 'react';
+import { Button, Snippet } from '@nextui-org/react';
 import { JsonRecord } from '@prisma/client';
 import { HiOutlinePlus, HiOutlineMinus } from 'react-icons/hi';
 import { Link } from '@nextui-org/react';
@@ -17,7 +17,7 @@ export default function JsonData({
 
 	return (
 		<div className="">
-			<div className="mb-4 w-full flex justify-end">
+			<div className="mb-4 w-full flex justify-start space-x-5">
 				<Button
 					variant="bordered"
 					endContent={
@@ -28,33 +28,29 @@ export default function JsonData({
 					{showData ? 'Hide JSON Data' : 'Show JSON Data'}
 				</Button>
 
-				<Button
-					href="https://github.com/nextui-org/nextui"
-					as={Link}
-					color="default"
-					showAnchorIcon
-					variant="bordered"
-				>
-					Button Link
-				</Button>
+				{/* <Button href={href} as={Link} color="default" showAnchorIcon>
+					API endpoint
+				</Button> */}
 				<Link
-					isBlock
 					showAnchorIcon
 					href={href}
 					color="foreground"
-					className="hover:bg-white"
+					className="mx-2"
+					isExternal
+					title={href}
 				>
-					API route
+					API endpoint
 				</Link>
 			</div>
 
 			{showData && (
 				<Snippet
 					symbol=""
+					size="md"
 					radius="sm"
 					classNames={{
 						pre: 'whitespace-pre-wrap',
-						base: 'items-start rounded-md',
+						base: 'items-start rounded-md p-4',
 					}}
 					tooltipProps={{
 						content: 'Copy',
